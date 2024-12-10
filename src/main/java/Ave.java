@@ -1,60 +1,58 @@
 package zooAnimales;
 
-import java.util.Arrays;
-import java.util.Objects;
-
 public class Ave extends Animal {
     private static Ave[] listado = new Ave[100];
     public static int halcones;
     public static int aguilas;
     private String colorPlumas;
 
-    public Ave(String nombre, int edad, String habitat, String genero, String color) {
-        super(nombre, edad, habitat, genero);
+    public Ave(String nombre, int edad, String habitat, String genero, String color){
+        this.nombre = nombre;
+        this.edad = edad;
+        this.habitat = habitat;
+        this.genero = genero;
         this.colorPlumas = color;
-        totalAnimales++;
-        agregarAListado(this);
+        totalAnimales += 1;
+        for (int i = 0; i < listado.length; i++){
+            if (listado[i] == null){
+                listado[i] = this;
+                break;
+            }
+        }
     }
-
-    public Ave() {
-        totalAnimales++;
-        agregarAListado(this);
-    }
-
-    private static void agregarAListado(Ave ave) {
-        for (int i = 0; i < listado.length; i++) {
-            if (listado[i] == null) {
-                listado[i] = ave;
+    public Ave(){totalAnimales += 1;
+        for (int i = 0; i < listado.length; i++){
+            if (listado[i] == null){
+                listado[i] = this;
                 break;
             }
         }
     }
 
-    public void setColorPlumas(String color) {
-        this.colorPlumas = color;
+    public void setColorPlumas(String color){this.colorPlumas = color;}
+
+    public String getColorPlumas(){return this.colorPlumas;}
+
+    public static int cantidadAves(){
+        int c = 0;
+        for (Animal i: listado){
+            if (i != null){
+                c += 1;
+            }
+        }
+        return c;
     }
 
-    public String getColorPlumas() {
-        return this.colorPlumas;
-    }
+    public String movimiento(){return "volar";}
 
-    public static int cantidadAves() {
-        return (int) Arrays.stream(listado)
-                           .filter(Objects::nonNull)
-                           .count();
+    public static Ave crearHalcon(String nombre, int edad, String genero){
+        Ave samuel = new Ave(nombre, edad, "montanas", genero, "cafe glorioso");
+        halcones += 1;
+        return samuel;
     }
-
-    public String movimiento() {
-        return "volar";
-    }
-
-    public static Ave crearHalcon(String nombre, int edad, String genero) {
-        halcones++;
-        return new Ave(nombre, edad, "montanas", genero, "cafe glorioso");
-    }
-
     public static Ave crearAguila(String nombre, int edad, String genero) {
-        aguilas++;
-        return new Ave(nombre, edad, "montanas", genero, "blanco y amarillo");
+        Ave albeiro = new Ave(nombre, edad, "montanas", genero, "blanco y amarillo");
+        aguilas += 1;
+        return albeiro;
     }
 }

@@ -1,62 +1,46 @@
 package gestion;
 
 import zooAnimales.Animal;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Zona {
     private String nombre;
     private Zoologico zoo;
-    private List<Animal> animales;
-
-    public Zona(String nombre, Zoologico zoo) {
+    private Animal[] animales = new Animal[100];
+    public Zona (String nombre, Zoologico zoo){
         this.nombre = nombre;
         this.zoo = zoo;
-        this.animales = new ArrayList<>();
         zoo.agregarZonas(this);
     }
+    public Zona (){}
 
-    public Zona() {
-        this.animales = new ArrayList<>();
-    }
+    public void setNombre(String nombre){this.nombre = nombre;}
+    public void setZoo(Zoologico zoo){this.zoo = zoo;}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public String getNombre(){return this.nombre;}
+    public Zoologico getZoo(){return this.zoo;}
+    public Animal[] getAnimales(){return animales;}
 
-    public void setZoo(Zoologico zoo) {
-        this.zoo = zoo;
-    }
-
-    public String getNombre() {
-        return this.nombre;
-    }
-
-    public Zoologico getZoo() {
-        return this.zoo;
-    }
-
-    public List<Animal> getAnimales() {
-        return new ArrayList<>(animales); 
-    }
-
-    public void agregarAnimales(Animal animal) {
-        if (animal != null) {
-            animales.add(animal);
-            animal.setZona(this);
+    public void agregarAnimales(Animal animal){
+        for (int i = 0; i < animales.length; i++){
+            if (animales[i] == null){
+                animales[i]=animal;
+                animales[i].setZona(this);
+                break;
+            }
         }
     }
-
-    public int cantidadAnimales() {
-        return animales.size();
+    public int cantidadAnimales(){
+        int c = 0;
+        for (Animal i: animales){
+            if (i != null){
+                c += 1;
+            }
+        }
+        return c;
+    }
+    public Zona get(int a){
+        return this;
     }
 
-    public Zona get(int a) {
-        return this; 
-    }
-
-    @Override
-    public String toString() {
-        return nombre;
-    }
+    public String toString(){return nombre;}
 }
